@@ -1,0 +1,20 @@
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.last-action-button {
+  margin-left: 4px;
+}
+
+.card {
+  max-width: 800px;
+  min-width: 400px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
