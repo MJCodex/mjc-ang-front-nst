@@ -11,6 +11,10 @@ import {
 import {
   LayoutDefaultNavBarComponent
 } from "./shared/layout/layout-default/layout-default-nav-bar/layout-default-nav-bar.component";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

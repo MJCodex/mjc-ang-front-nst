@@ -1,1 +1,40 @@
-<p>home works!</p>
+<h2>Busca tu super vuelo!</h2>
+<div class="router-outlet-content">
+  <form [formGroup]="form" class="search-config-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Number</mat-label>
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="Number"
+             matInput
+             formControlName="source"
+             [matAutocomplete]="sourceComplete">
+      <mat-autocomplete autoActiveFirstOption #sourceComplete="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Number</mat-label>
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="Number"
+             matInput
+             formControlName="destination"
+             [matAutocomplete]="destinationComplete">
+      <mat-autocomplete autoActiveFirstOption #destinationComplete="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-checkbox class="example-margin" formControlName="withReturn">Ida y vuelta</mat-checkbox>
+
+    <button mat-fab color="accent">
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+</div>
