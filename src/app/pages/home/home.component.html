@@ -1,40 +1,62 @@
 <h2>Busca tu super vuelo!</h2>
 <div class="router-outlet-content">
   <form [formGroup]="form" class="search-config-form">
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Number</mat-label>
+    <mat-form-field appearance="fill">
+      <mat-label>Origen</mat-label>
       <input type="text"
-             placeholder="Pick one"
-             aria-label="Number"
+             placeholder="Seleccionar"
              matInput
              formControlName="source"
              [matAutocomplete]="sourceComplete">
       <mat-autocomplete autoActiveFirstOption #sourceComplete="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
+        <ng-container *ngFor="let option of filteredSources | async">
+          <mat-option *ngIf="option !== form.get('destination')?.value" [value]="option">
+            {{option}}
+          </mat-option>
+        </ng-container>
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Number</mat-label>
+    <mat-form-field appearance="fill">
+      <mat-label>Destino</mat-label>
       <input type="text"
-             placeholder="Pick one"
-             aria-label="Number"
+             placeholder="Seleccionar"
              matInput
              formControlName="destination"
              [matAutocomplete]="destinationComplete">
       <mat-autocomplete autoActiveFirstOption #destinationComplete="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
+        <ng-container *ngFor="let option of filteredDestinations | async">
+          <mat-option *ngIf="option !== form.get('source')?.value" [value]="option">
+            {{option}}
+          </mat-option>
+        </ng-container>
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-checkbox class="example-margin" formControlName="withReturn">Ida y vuelta</mat-checkbox>
+    <mat-checkbox formControlName="withReturn">Ida y vuelta</mat-checkbox>
 
-    <button mat-fab color="accent">
+    <button mat-fab color="accent" (click)="getFlights()">
       <mat-icon>search</mat-icon>
     </button>
   </form>
+
+  <div class="cards-container">
+    <ng-container *ngFor="let calculatedPath of calculatedPaths">
+
+      <app-flight-card [paths]="calculatedPath">
+        <ng-container card>
+          <ng-container *ngFor="let childPath of calculatedPath">
+
+            <mat-card-subtitle>
+              <i class="material-icons">flight_takeoff</i>
+              {{childPath.departureStation}} MOON Airlines Aeropuerto
+              <i class="material-icons">flight_land</i>
+              {{childPath.arrivalStation}} MOON Airlines Aeropuerto
+            </mat-card-subtitle>
+          </ng-container>
+        </ng-container>
+      </app-flight-card>
+
+    </ng-container>
+  </div>
 </div>

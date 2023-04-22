@@ -10,6 +10,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {FlightCardComponent} from "../components/flight-card/flight-card.component";
+import {MatCardModule} from "@angular/material/card";
 
 const routes: Routes = [
   {
@@ -31,7 +33,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    FlightCardComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,8 @@ const routes: Routes = [
     MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule
   ],
   exports: [RouterModule]
 })
