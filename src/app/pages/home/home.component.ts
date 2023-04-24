@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
   private _autocompleteValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       this.allDestinations?.includes(control.value);
-      if (!this.allDestinations?.includes(control.value.toUpperCase())) {
+      if (control.value.length === 3 && !this.allDestinations?.includes(control.value.toUpperCase())) {
         return {'invalidAutocomplete': {value: control.value}}
       }
       return null;

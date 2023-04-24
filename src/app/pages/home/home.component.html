@@ -40,7 +40,6 @@
       <mat-error *ngIf="form.get('destination')?.hasError('required')">Debes seleccionar el destino</mat-error>
       <mat-error *ngIf="form.get('destination')?.hasError('invalidAutocomplete')">Destino no existe</mat-error>
     </mat-form-field>
-    {{form.get('source')?.errors | json}}
     <button mat-fab color="accent" (click)="getFlights()">
       <mat-icon>search</mat-icon>
     </button>
