@@ -1,16 +1,24 @@
-import { TestBed } from '@angular/core/testing';
-
 import { CurrencyService } from './currency.service';
+import { HttpClient } from "@angular/common/http";
 
 describe('CurrencyService', () => {
   let service: CurrencyService;
+  let fake_http: jasmine.SpyObj<HttpClient>;
+
+  function createService() {
+    service = new CurrencyService(
+      fake_http,
+    );
+  }
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(CurrencyService);
+    fake_http = jasmine.createSpyObj<HttpClient>('HttpClient', ['get']);
+
+    createService();
   });
 
-  it('should be created', () => {
+  it('should create', () => {
     expect(service).toBeTruthy();
   });
+
 });

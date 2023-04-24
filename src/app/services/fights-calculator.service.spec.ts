@@ -1,16 +1,24 @@
-import { TestBed } from '@angular/core/testing';
-
 import { FightsCalculatorService } from './fights-calculator.service';
+import { FlightsService } from "./flights.service";
 
 describe('FightsCalculatorService', () => {
   let service: FightsCalculatorService;
+  let fake_flightsService: jasmine.SpyObj<FlightsService>;
+
+  function createService() {
+    service = new FightsCalculatorService(
+      fake_flightsService,
+    );
+  }
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(FightsCalculatorService);
+    fake_flightsService = jasmine.createSpyObj<FlightsService>('FlightsService', ['getFlights']);
+
+    createService();
   });
 
-  it('should be created', () => {
+  it('should create', () => {
     expect(service).toBeTruthy();
   });
+
 });
