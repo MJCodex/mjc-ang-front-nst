@@ -8,14 +8,14 @@ import {CurrencyService} from "../../../../services/currency.service";
 })
 export class LayoutDefaultNavBarComponent implements OnInit {
   public currencies: Array<any> = []
-  public displayedCurrencies = ['COP', 'MXN', 'USD'];
+  public displayedCurrencies: string[] = ['COP', 'MXN', 'USD'];
 
   constructor(
     private _currencyService: CurrencyService
   ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getCurrencies();
   }
 
@@ -24,9 +24,9 @@ export class LayoutDefaultNavBarComponent implements OnInit {
   }
 
   getCurrencies(): void {
-    this._currencyService.getCurrencies().subscribe(({rates}) => {
+    this._currencyService.getCurrencies().subscribe(({rates}): void => {
 
-      this.currencies = Object.values(rates).map((value: any, index: number) => {
+      this.currencies = Object.values(rates).map((value: any, index: number): { symbol: string, value: any } => {
         return {
           symbol: Object.keys(rates)[index],
           value

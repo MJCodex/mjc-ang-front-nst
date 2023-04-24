@@ -1,26 +1,27 @@
 import {Injectable} from '@angular/core';
 import {FlightsService} from "./flights.service";
+import {FlightApiResponseModel} from "../models/flight-api-response.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FightsCalculatorService {
-  private flights: any = [];
+  private flights: FlightApiResponseModel[] | undefined = [];
 
   constructor(
     private _flightsService: FlightsService
   ) {
   }
 
-  async getFlights(source: string, destination: string) {
+  async getFlights(source: string, destination: string): Promise<any[]> {
     await this.getFlightsApi();
     const flightsGraph: { [key: string]: any } = this.createFlightsGraph(this.flights);
     return this.calculateFlightPaths(flightsGraph, source, destination);
   }
 
-  private createFlightsGraph(flights: any[]): { [key: string]: any } {
+  private createFlightsGraph(flights: FlightApiResponseModel[] | undefined): { [p: string]: any } {
     const flightsGraph: { [key: string]: any } = {};
-    flights.forEach((flight: any): void => {
+    flights?.forEach((flight: any): void => {
       flightsGraph[flight.departureStation] = flightsGraph[flight.departureStation] ?? [];
       flightsGraph[flight.departureStation].push(flight);
     });
@@ -31,7 +32,7 @@ export class FightsCalculatorService {
   private calculateFlightPaths(flightsGraph: { [key: string]: any }, source: string, destination: string) {
     const childPaths: any[] = flightsGraph[source];
     const allPaths: any[] = Array.from({length: childPaths.length}, () => []);
-    childPaths.forEach((childPath, index) => {
+    childPaths.forEach((childPath, index: number): void => {
       allPaths[index].push(childPath);
       this.calculatePath(flightsGraph[childPath.arrivalStation], destination, index, allPaths, flightsGraph);
     });
@@ -69,8 +70,8 @@ export class FightsCalculatorService {
     return Object.keys(flightsGraph);
   }
 
-  async getFlightsApi() {
-    if (!this.flights.length) {
+  async getFlightsApi(): Promise<void> {
+    if (!this.flights?.length) {
       this.flights = await this._flightsService.getFlights().toPromise();
     }
   }

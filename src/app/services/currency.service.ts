@@ -7,7 +7,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class CurrencyService {
 
-  public currency = {symbol: 'USD', value: 1};
+  public currency: { symbol: string, value: number } = {symbol: 'USD', value: 1};
 
   currency$: BehaviorSubject<any> = new BehaviorSubject<any>(this.currency);
 
@@ -17,12 +17,10 @@ export class CurrencyService {
   }
 
   setCurrency(symbol: string, value: number): void {
-    const data = {
+    const data: { symbol: string, value: number } = {
       symbol,
       value
     };
-
-    localStorage.setItem('__currency', JSON.stringify({symbol, value}));
 
     this.currency$.next(data);
   }

@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   filteredSources?: Observable<string[]>;
   filteredDestinations?: Observable<string[]>;
   calculatedPaths?: any[];
-  searched = false;
+  searched: boolean = false;
   maxStops: number = 1;
 
   constructor(
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.form = this._formBuilder.group({
       source: ['', [Validators.required, Validators.maxLength(3), Validators.minLength(3), this._autocompleteValidator()]],
       destination: ['', [Validators.required, Validators.maxLength(3), Validators.minLength(3), this._autocompleteValidator()]],
@@ -36,9 +36,9 @@ export class HomeComponent implements OnInit {
   }
 
   _noSameValueValidator(source: string, destination: string) {
-    return (formGroup: FormGroup) => {
-      const sourceControl = formGroup.controls[source];
-      const destinationControl = formGroup.controls[destination];
+    return (formGroup: FormGroup): void => {
+      const sourceControl: AbstractControl<any, any> = formGroup.controls[source];
+      const destinationControl: AbstractControl<any, any> = formGroup.controls[destination];
 
       if (sourceControl.value.toUpperCase() === destinationControl.value.toUpperCase()) {
         destinationControl.setErrors({noMatch: true});
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  initFilteredOptions() {
+  initFilteredOptions(): void {
     this.filteredSources = this.form.get('source')?.valueChanges.pipe(
       startWith(''),
       map((value: any) => this._filter(value || '')),
@@ -60,20 +60,20 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  async getFlights() {
+  async getFlights(): Promise<void> {
     if (this.form.invalid) return;
     this.calculatedPaths = await this._flightsCalculator
       .getFlights(this.form.get('source')?.value.toUpperCase(), this.form.get('destination')?.value.toUpperCase());
     this.searched = true;
   }
 
-  async getAllDestinations() {
+  async getAllDestinations(): Promise<void> {
     this.allDestinations = await this._flightsCalculator.getAllDestinations();
   }
 
   private _filter(value: string): string[] {
     const filterValue: string = value.toLowerCase();
-    return this.allDestinations?.filter(option => option.toLowerCase().includes(filterValue));
+    return this.allDestinations?.filter((option: string) => option.toLowerCase().includes(filterValue));
   }
 
   private _autocompleteValidator(): ValidatorFn {
@@ -87,9 +87,9 @@ export class HomeComponent implements OnInit {
   }
 
   get existValidPath(): boolean {
-    let validPath = false;
+    let validPath: boolean = false;
     if (!this.form.get('stops')?.value) return true;
-    this.calculatedPaths?.forEach((path) => {
+    this.calculatedPaths?.forEach((path): void => {
       if (this.form.get('stops')?.value && (path.length <= this.maxStops)) {
         validPath = true;
       }

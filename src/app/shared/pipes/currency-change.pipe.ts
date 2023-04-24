@@ -17,8 +17,8 @@ export class CurrencyChangePipe implements PipeTransform, OnDestroy {
 
   transform(valueIn: number): any {
 
-    const observer$ = this.currencyService.currency$
-      .subscribe(({symbol, value}) => {
+    const observer$: Subscription = this.currencyService.currency$
+      .subscribe(({symbol, value}): void => {
         this.value = `${(valueIn * value).toFixed(2)} ${symbol}`;
       })
 
@@ -28,7 +28,7 @@ export class CurrencyChangePipe implements PipeTransform, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.listen$.forEach(observer => observer.unsubscribe());
+    this.listen$.forEach((observer: Subscription) => observer.unsubscribe());
   }
 
 }

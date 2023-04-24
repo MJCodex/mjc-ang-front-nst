@@ -6,9 +6,9 @@ import {DefaultValueAccessor} from "@angular/forms";
   standalone: true
 })
 export class UpperCaseInputDirective extends DefaultValueAccessor {
-  @HostListener('input', ['$event']) input($event: InputEvent) {
-    const target = $event.target as HTMLInputElement;
-    const start = target.selectionStart;
+  @HostListener('input', ['$event']) input($event: InputEvent): void {
+    const target: HTMLInputElement = $event.target as HTMLInputElement;
+    const start: number | null = target.selectionStart;
 
     target.value = target.value.toUpperCase();
     target.setSelectionRange(start, start);
