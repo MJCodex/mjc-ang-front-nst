@@ -4,7 +4,7 @@ import {HomeComponent} from './home/home.component';
 import {RouterModule, Routes} from "@angular/router";
 import {LayoutDefaultComponent} from "../shared/layout/layout-default/layout-default.component";
 import {MatInputModule} from "@angular/material/input";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatIconModule} from "@angular/material/icon";
@@ -48,7 +48,8 @@ const routes: Routes = [
     MatButtonModule,
     MatToolbarModule,
     MatCardModule,
-    UpperCaseInputDirective
+    UpperCaseInputDirective,
+    FormsModule
   ],
   exports: [RouterModule]
 })
