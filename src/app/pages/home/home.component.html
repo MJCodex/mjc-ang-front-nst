@@ -15,6 +15,10 @@
           </mat-option>
         </ng-container>
       </mat-autocomplete>
+      <mat-error *ngIf="form.get('source')?.hasError('maxlength')">Máximo 3 caracteres</mat-error>
+      <mat-error *ngIf="form.get('source')?.hasError('minlength')">Mínimo 3 caracteres</mat-error>
+      <mat-error *ngIf="form.get('source')?.hasError('required')">Debes seleccionar el origen</mat-error>
+      <mat-error *ngIf="form.get('source')?.hasError('invalidAutocomplete')">Origen no existe</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -31,8 +35,12 @@
           </mat-option>
         </ng-container>
       </mat-autocomplete>
+      <mat-error *ngIf="form.get('destination')?.hasError('maxlength')">Máximo 3 caracteres</mat-error>
+      <mat-error *ngIf="form.get('destination')?.hasError('minlength')">Mínimo 3 caracteres</mat-error>
+      <mat-error *ngIf="form.get('destination')?.hasError('required')">Debes seleccionar el destino</mat-error>
+      <mat-error *ngIf="form.get('destination')?.hasError('invalidAutocomplete')">Destino no existe</mat-error>
     </mat-form-field>
-
+    {{form.get('source')?.errors | json}}
     <button mat-fab color="accent" (click)="getFlights()">
       <mat-icon>search</mat-icon>
     </button>

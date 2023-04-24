@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {Observable, startWith, map} from "rxjs";
 import {FightsCalculatorService} from "../../services/fights-calculator.service";
 
@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this.form = this._formBuilder.group({
-      source: ['', [Validators.required, Validators.maxLength(3)]],
-      destination: ['', [Validators.required, Validators.maxLength(3)]]
+      source: ['', [Validators.required, Validators.maxLength(3), Validators.minLength(3), this._autocompleteValidator()]],
+      destination: ['', [Validators.required, Validators.maxLength(3), Validators.minLength(3), this._autocompleteValidator()]]
     });
 
     await this.getAllDestinations();
@@ -45,7 +45,9 @@ export class HomeComponent implements OnInit {
   }
 
   async getFlights() {
-    this.calculatedPaths = await this._flightsCalculator.getFlights(this.form.get('source')?.value, this.form.get('destination')?.value);
+    if (this.form.invalid) return;
+    this.calculatedPaths = await this._flightsCalculator
+      .getFlights(this.form.get('source')?.value.toUpperCase(),this.form.get('destination')?.value.toUpperCase());
   }
 
   async getAllDestinations() {
@@ -55,5 +57,15 @@ export class HomeComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue: string = value.toLowerCase();
     return this.allDestinations?.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  private _autocompleteValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      this.allDestinations?.includes(control.value);
+      if (!this.allDestinations?.includes(control.value.toUpperCase())) {
+        return {'invalidAutocomplete': {value: control.value}}
+      }
+      return null;
+    }
   }
 }
