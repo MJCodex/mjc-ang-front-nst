@@ -21,16 +21,16 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.form = this._formBuilder.group({
       source: ['', [Validators.required, Validators.maxLength(3)]],
       destination: ['', [Validators.required, Validators.maxLength(3)]],
       withReturn: ['']
     });
 
-    this.initFilteredOptions();
+    await this.getAllDestinations();
 
-    this.getAllDestinations();
+    this.initFilteredOptions();
   }
 
   initFilteredOptions() {
@@ -45,16 +45,16 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getFlights() {
-    this.calculatedPaths = this._flightsCalculator.getFlights(this.form.get('source')?.value, this.form.get('destination')?.value);
+  async getFlights() {
+    this.calculatedPaths = await this._flightsCalculator.getFlights(this.form.get('source')?.value, this.form.get('destination')?.value);
   }
 
-  getAllDestinations() {
-    this.allDestinations = this._flightsCalculator.getAllDestinations();
+  async getAllDestinations() {
+    this.allDestinations = await this._flightsCalculator.getAllDestinations();
   }
 
   private _filter(value: string): string[] {
     const filterValue: string = value.toLowerCase();
-    return this.allDestinations.filter(option => option.toLowerCase().includes(filterValue));
+    return this.allDestinations?.filter(option => option.toLowerCase().includes(filterValue));
   }
 }

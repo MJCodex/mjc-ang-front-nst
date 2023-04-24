@@ -1,153 +1,19 @@
 import {Injectable} from '@angular/core';
+import {FlightsService} from "./flights.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FightsCalculatorService {
-  private flights: any = [
-    {
-      "departureStation": "MZL",
-      "arrivalStation": "MDE",
-      "flightCarrier": "CO",
-      "flightNumber": "8001",
-      "price": 200
-    },
-    {
-      "departureStation": "MZL",
-      "arrivalStation": "CTG",
-      "flightCarrier": "CO",
-      "flightNumber": "8002",
-      "price": 200
-    },
-    {
-      "departureStation": "PEI",
-      "arrivalStation": "BOG",
-      "flightCarrier": "CO",
-      "flightNumber": "8003",
-      "price": 200
-    },
-    {
-      "departureStation": "MDE",
-      "arrivalStation": "BCN",
-      "flightCarrier": "CO",
-      "flightNumber": "8004",
-      "price": 500
-    },
-    {
-      "departureStation": "CTG",
-      "arrivalStation": "CAN",
-      "flightCarrier": "CO",
-      "flightNumber": "8005",
-      "price": 300
-    },
-    {
-      "departureStation": "BOG",
-      "arrivalStation": "MAD",
-      "flightCarrier": "CO",
-      "flightNumber": "8006",
-      "price": 500
-    },
-    {
-      "departureStation": "BOG",
-      "arrivalStation": "MEX",
-      "flightCarrier": "CO",
-      "flightNumber": "8007",
-      "price": 300
-    },
-    {
-      "departureStation": "MZL",
-      "arrivalStation": "PEI",
-      "flightCarrier": "CO",
-      "flightNumber": "8008",
-      "price": 200
-    },
-    {
-      "departureStation": "MDE",
-      "arrivalStation": "CTG",
-      "flightCarrier": "CO",
-      "flightNumber": "8009",
-      "price": 200
-    },
-    {
-      "departureStation": "BOG",
-      "arrivalStation": "CTG",
-      "flightCarrier": "CO",
-      "flightNumber": "8010",
-      "price": 200
-    },
-    {
-      "departureStation": "MDE",
-      "arrivalStation": "MZL",
-      "flightCarrier": "CO",
-      "flightNumber": "9001",
-      "price": 200
-    },
-    {
-      "departureStation": "CTG",
-      "arrivalStation": "MZL",
-      "flightCarrier": "CO",
-      "flightNumber": "9002",
-      "price": 200
-    },
-    {
-      "departureStation": "BOG",
-      "arrivalStation": "PEI",
-      "flightCarrier": "CO",
-      "flightNumber": "9003",
-      "price": 200
-    },
-    {
-      "departureStation": "BCN",
-      "arrivalStation": "MDE",
-      "flightCarrier": "ES",
-      "flightNumber": "9004",
-      "price": 500
-    },
-    {
-      "departureStation": "CAN",
-      "arrivalStation": "CTG",
-      "flightCarrier": "MX",
-      "flightNumber": "9005",
-      "price": 300
-    },
-    {
-      "departureStation": "MAD",
-      "arrivalStation": "BOG",
-      "flightCarrier": "ES",
-      "flightNumber": "9006",
-      "price": 500
-    },
-    {
-      "departureStation": "MEX",
-      "arrivalStation": "BOG",
-      "flightCarrier": "MX",
-      "flightNumber": "9007",
-      "price": 300
-    },
-    {
-      "departureStation": "PEI",
-      "arrivalStation": "MZL",
-      "flightCarrier": "CO",
-      "flightNumber": "9008",
-      "price": 200
-    },
-    {
-      "departureStation": "CTG",
-      "arrivalStation": "MDE",
-      "flightCarrier": "CO",
-      "flightNumber": "9009",
-      "price": 200
-    },
-    {
-      "departureStation": "CTG",
-      "arrivalStation": "BOG",
-      "flightCarrier": "CO",
-      "flightNumber": "9010",
-      "price": 200
-    }
-  ];
+  private flights: any = [];
 
-  getFlights(source: string, destination: string) {
+  constructor(
+    private _flightsService: FlightsService
+  ) {
+  }
+
+  async getFlights(source: string, destination: string) {
+    await this.getFlightsApi();
     const flightsGraph: { [key: string]: any } = this.createFlightsGraph(this.flights);
     return this.calculateFlightPaths(flightsGraph, source, destination);
   }
@@ -197,8 +63,15 @@ export class FightsCalculatorService {
     return allPaths.filter(path => path[path.length - 1].arrivalStation === destination);
   }
 
-  getAllDestinations(): string[] {
+  async getAllDestinations(): Promise<string[]> {
+    await this.getFlightsApi();
     const flightsGraph: { [key: string]: any } = this.createFlightsGraph(this.flights);
     return Object.keys(flightsGraph);
+  }
+
+  async getFlightsApi() {
+    if (!this.flights.length) {
+      this.flights = await this._flightsService.getFlights().toPromise();
+    }
   }
 }
