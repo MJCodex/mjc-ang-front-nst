@@ -12,6 +12,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {FlightCardComponent} from "../components/flight-card/flight-card.component";
 import {MatCardModule} from "@angular/material/card";
+import {UpperCaseInputDirective} from "../shared/utilities/upper-case-input.directive";
 
 const routes: Routes = [
   {
@@ -46,7 +47,8 @@ const routes: Routes = [
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    UpperCaseInputDirective
   ],
   exports: [RouterModule]
 })

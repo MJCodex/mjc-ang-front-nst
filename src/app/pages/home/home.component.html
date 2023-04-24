@@ -3,7 +3,7 @@
   <form [formGroup]="form" class="search-config-form">
     <mat-form-field appearance="fill">
       <mat-label>Origen</mat-label>
-      <input type="text"
+      <input type="text" toUppercase
              placeholder="Seleccionar"
              matInput
              formControlName="source"
@@ -19,7 +19,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Destino</mat-label>
-      <input type="text"
+      <input type="text" toUppercase
              placeholder="Seleccionar"
              matInput
              formControlName="destination"
@@ -32,8 +32,6 @@
         </ng-container>
       </mat-autocomplete>
     </mat-form-field>
-
-    <mat-checkbox formControlName="withReturn">Ida y vuelta</mat-checkbox>
 
     <button mat-fab color="accent" (click)="getFlights()">
       <mat-icon>search</mat-icon>

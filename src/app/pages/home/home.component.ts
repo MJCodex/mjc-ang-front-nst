@@ -24,8 +24,7 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     this.form = this._formBuilder.group({
       source: ['', [Validators.required, Validators.maxLength(3)]],
-      destination: ['', [Validators.required, Validators.maxLength(3)]],
-      withReturn: ['']
+      destination: ['', [Validators.required, Validators.maxLength(3)]]
     });
 
     await this.getAllDestinations();
