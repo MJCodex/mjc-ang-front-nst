@@ -13,6 +13,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {FlightCardComponent} from "../components/flight-card/flight-card.component";
 import {MatCardModule} from "@angular/material/card";
 import {UpperCaseInputDirective} from "../shared/utilities/upper-case-input.directive";
+import {CurrencyChangePipe} from "../shared/pipes/currency-change.pipe";
 
 const routes: Routes = [
   {
@@ -49,7 +50,8 @@ const routes: Routes = [
     MatToolbarModule,
     MatCardModule,
     UpperCaseInputDirective,
-    FormsModule
+    FormsModule,
+    CurrencyChangePipe
   ],
   exports: [RouterModule]
 })

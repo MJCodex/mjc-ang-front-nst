@@ -5,18 +5,11 @@
       <mat-icon>currency_exchange</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>translate</mat-icon>
-        Peso
-      </button>
-      <button mat-menu-item>
-        <mat-icon>translate</mat-icon>
-        Dolar
-      </button>
-      <button mat-menu-item>
-        <mat-icon>logout</mat-icon>
-        Otro
-      </button>
+      <ng-container *ngFor="let currency of currencies">
+        <button mat-menu-item *ngIf="displayedCurrencies.includes(currency.symbol)" (click)="setCurrency(currency?.symbol,currency?.value)">
+          {{currency.symbol}}
+        </button>
+      </ng-container>
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

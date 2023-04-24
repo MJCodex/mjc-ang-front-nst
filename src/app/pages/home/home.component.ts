@@ -91,7 +91,6 @@ export class HomeComponent implements OnInit {
     if (!this.form.get('stops')?.value) return true;
     this.calculatedPaths?.forEach((path) => {
       if (this.form.get('stops')?.value && (path.length <= this.maxStops)) {
-        console.log(this.form.get('stops')?.value);
         validPath = true;
       }
     });
