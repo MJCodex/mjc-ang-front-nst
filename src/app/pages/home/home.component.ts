@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   filteredSources?: Observable<string[]>;
   filteredDestinations?: Observable<string[]>;
   calculatedPaths?: any[];
+  searched = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit {
     if (this.form.invalid) return;
     this.calculatedPaths = await this._flightsCalculator
       .getFlights(this.form.get('source')?.value.toUpperCase(),this.form.get('destination')?.value.toUpperCase());
+    this.searched = true;
   }
 
   async getAllDestinations() {

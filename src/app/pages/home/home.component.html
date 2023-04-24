@@ -63,5 +63,9 @@
       </app-flight-card>
 
     </ng-container>
+
+    <ng-container *ngIf="form.valid && !calculatedPaths?.length && searched">
+      <h3>La consulta no pudo ser procesada</h3>
+    </ng-container>
   </div>
 </div>
