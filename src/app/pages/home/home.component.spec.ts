@@ -1,7 +1,11 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HomeComponent } from './home.component';
-import { FormBuilder } from "@angular/forms";
-import { FightsCalculatorService } from "../../services/fights-calculator.service";
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {HomeComponent} from './home.component';
+import {FormBuilder} from "@angular/forms";
+import {FightsCalculatorService} from "../../services/fights-calculator.service";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -15,6 +19,12 @@ describe('HomeComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
+      imports: [
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        MatCheckboxModule,
+        MatIconModule
+      ],
       providers: [
         { provide: FormBuilder, useFactory: () => fake_formBuilder },
         { provide: FightsCalculatorService, useFactory: () => fake_flightsCalculator },

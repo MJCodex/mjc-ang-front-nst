@@ -1,24 +1,11 @@
-import { CurrencyChangePipe } from './currency-change.pipe';
-import { CurrencyService } from "../../services/currency.service";
+import {CurrencyChangePipe} from "./currency-change.pipe";
+import {CurrencyService} from "../../services/currency.service";
 
-describe('CurrencyChangePipe', () => {
-  let pipe: CurrencyChangePipe;
-  let fakeCurrencyService: jasmine.SpyObj<CurrencyService>;
+let currencyService: CurrencyService;
 
-  function createPipe() {
-    pipe = new CurrencyChangePipe(
-      fakeCurrencyService,
-    );
-  }
-
-  beforeEach(() => {
-    fakeCurrencyService = jasmine.createSpyObj<CurrencyService>('CurrencyService', []);
-
-    createPipe();
-  });
-
-  it('should create', () => {
+describe('SuperDadPipe', () => {
+  it('create an instance', () => {
+    const pipe = new CurrencyChangePipe(currencyService);
     expect(pipe).toBeTruthy();
   });
-
 });

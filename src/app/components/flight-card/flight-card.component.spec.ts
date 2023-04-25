@@ -1,5 +1,8 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FlightCardComponent } from './flight-card.component';
+import {MatCardModule} from "@angular/material/card";
+import {CurrencyChangePipe} from "../../shared/pipes/currency-change.pipe";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('FlightCardComponent', () => {
   let component: FlightCardComponent;
@@ -9,6 +12,11 @@ describe('FlightCardComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [FlightCardComponent],
+      imports: [
+        MatCardModule,
+        CurrencyChangePipe,
+        HttpClientTestingModule
+      ],
       providers: [
       ]
     })
